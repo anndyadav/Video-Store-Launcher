@@ -1,11 +1,13 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-package videostorelauncher;
 import java.util.*;
+import static java.util.Collections.list;
 
 /**
  *
@@ -26,50 +28,67 @@ class video{
         average_rating = avgrating;
         return_cd = returncd;   
     }
+      
 }
 
-class videostore{
+class videostore extends video{
+    
+    
+
     static void addVideo(String n, ArrayList <video> list){
-        String name = n;
-        list.add(new video(name,false,0,false));
-       /* System.out.println("Enter name: ");
-        Scanner n  = new Scanner(System.in);
-        name = n.nextLine();
-        arr[i] = new video(name,false,0,false);
-        System.out.println("Added: "+ arr[i].title);*/
+        //System.out.println(11);
+        list.add(new video(n,false,0,false)); 
     }
     
     static void checkout(String n, ArrayList <video> list){
-        Iterator a = list.iterator();
-        int i = 0;
-        while(a.hasNext()){
-            if()
-        }
-        
-        
-        /*if(arr[index].checked == true){
-            System.out.println("Video Already Rented.");
-        }
-        else{
-            arr[index].checked = true;
-        }*/
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).title == n){
+                if(list.get(i).checked == true){
+                    System.out.println("Video Already Rented");
+                }
+            }
+            else {
+                list.get(i).checked = true;
+            }
+                
+            }
+
     }
     
-    static void returnVideo(int index,video [] arr){
-        arr[index].return_cd = true;
+    static void returnVideo(String n,ArrayList <video> list){
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).title == n){
+                list.get(i).return_cd = true;
+                System.out.println("Video Returned.");
+                }
+            }
+              
+            }
+    
+    
+    static void recieveRating(String n, ArrayList <video> list, int rating){
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).title == n){
+                list.get(i).average_rating = rating;
+                    System.out.println("Video Rating Updated.");
+                }
+            }   
     }
     
-    static void recieveRating(int index, video [] arr, int rating){
-        arr[index].average_rating = rating;
-        System.out.println("Rating Updated");
-    }
     
-    static void listInventory(video [] arr){
+    static void listInventory(ArrayList <video> list){
+	System.out.println("\n");
         System.out.println("Name\t Rating\n");
-        for(int i=0; i<arr.length; i++){
-            System.out.println(arr[i].title+"\t"+arr[i].average_rating);
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).checked==false)
+            System.out.println(list.get(i).title+"\t"+list.get(i).average_rating);
         }
         
+        
+    }
+
+    public videostore(String tit, boolean che, int avgrating, boolean returncd) {
+        super(tit, che, avgrating, returncd);
     }
     
     
@@ -82,18 +101,9 @@ public class VideoStoreLauncher {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         ArrayList <video> list = new ArrayList <video>();
-        /*int i = 5;
-        video [] arr = new video[20];
-        arr[0] = new video("Godzilla",false,4,false);
-        arr[1] = new video("Terminator",false,3,false);
-        arr[2] = new video("The Shawshank Redemption",false,5,false);
-        arr[3] = new video("Wolf of the wall street",false,4,false);
-        arr[4] = new video("Fault of the stars",false,4,false);
-        
-        System.out.println(arr.length);*/
-        
+        //default objects
         list.add(new video("Godzilla",false,4,false));
         list.add(new video("Terminator",false,3,false));
         list.add(new video("The Shawshank Redemption",false,5,false));
@@ -101,61 +111,41 @@ public class VideoStoreLauncher {
         list.add(new video("Fault of the stars",false,4,false));
         
         int choice;
-        String name = new String();
-        
         System.out.println("Enter Choice:");
         System.out.println("1: ADD Video\n2: Checkout\n3: Return Video\n4: List Inventory\n5: Give Rating");
         
         Scanner s = new Scanner(System.in);
         choice = s.nextInt();
         
+	String name = new String();
         
         switch(choice){
             case 1 : 
                 System.out.println("Enter Name: ");
                 name = s.nextLine();
                 videostore.addVideo(name,list);
-                
                 break;
             case 2 : 
-                System.out.println("Enter Name");
+                System.out.println("Enter Name: ");
                 name = s.nextLine();
-                //int index = get_index(name,arr);
                 videostore.checkout(name,list);
                 break;
             case 3 : 
-                System.out.println("Enter Name");
+                System.out.println("Enter Name: ");
                 name = s.nextLine();
-                //index = get_index(name,arr);
-                videostore.returnVideo(get_index(name,arr),arr);
+                videostore.returnVideo(name,list);
                 break;
             case 4 : 
-                videostore.listInventory(arr);
+                videostore.listInventory(list);
                 break;
             case 5 :
-                System.out.println("Enter Name");
+                System.out.println("Enter Name: ");
                 name = s.nextLine();
-                //index = get_index(name,arr);
                 int rating;
                 System.out.println("Enter Rating: ");
                 rating = s.nextInt();
-                videostore.recieveRating(get_index(name,arr),arr,rating);
+                videostore.recieveRating(name,list,rating);
         }
-         
-    }
-    
-    static int get_index(String n, video [] arr){
-            int index = 0;
-            for(int i=0;i<arr.length;i++){
-                if(n==arr[i].title){
-                    index = i;
-                }
-            }
-            if(index!=0){
-                return index;
-            }
-            else
-                return 0;
-        }
-    
+      
+    } 
 }
