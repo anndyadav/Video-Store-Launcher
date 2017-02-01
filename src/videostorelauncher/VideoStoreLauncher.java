@@ -122,17 +122,17 @@ public class VideoStoreLauncher {
         switch(choice){
             case 1 : 
                 System.out.println("Enter Name: ");
-                name = s.nextLine();
+                name = s.next();
                 videostore.addVideo(name,list);
                 break;
             case 2 : 
                 System.out.println("Enter Name: ");
-                name = s.nextLine();
+                name = s.next();
                 videostore.checkout(name,list);
                 break;
             case 3 : 
                 System.out.println("Enter Name: ");
-                name = s.nextLine();
+                name = s.next();
                 videostore.returnVideo(name,list);
                 break;
             case 4 : 
@@ -140,7 +140,7 @@ public class VideoStoreLauncher {
                 break;
             case 5 :
                 System.out.println("Enter Name: ");
-                name = s.nextLine();
+                name = s.next();
                 int rating;
                 System.out.println("Enter Rating: ");
                 rating = s.nextInt();
